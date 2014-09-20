@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Let's Share</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="lib/css/ionic.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+    <link rel="stylesheet" href="lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="lib/js/ionic.js"></script>
     <script src="lib/js/angular/angular.js"></script>
@@ -22,122 +23,135 @@
     <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="lib/angular/angular.js"></script>
     <script type="text/javascript" src="lib/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true&region=IN&libraries=places"></script>
+
     <script src="js/app.js"></script>
 
-  </head>
-  <body ng-app="lets_share" ng-controller="TodoCtrl">
+</head>
+
+<body ng-app="lets_share" ng-controller="MainCtrl" ng-init="initMapAutoSuggest()">
     <side-menus>
-      <!-- Center content -->
-      <pane side-menu-content>
-        <div id="test" style="width:100%">
-        <div>
-        <header class="bar bar-header bar-positive">
-          <button class="button button-icon" ng-click="toggleProjects()">
-            <i class="icon ion-navicon"></i>
-          </button>
-          <h1 class="title"><!-- {{activeProject.title}} -->Lets Share</h1>
-          <!-- New Task button-->
-          <button class="button button-clear" ng-click="newTask()">
-            New
-          </button>
-        </header>
-      </div>
+        <!-- Center content -->
+        <pane side-menu-content>
+            <div id="test" style="height:100%">
+                <div>
+                    <header class="bar bar-header bar-positive">
+                        <button class="button button-icon" ng-click="toggleProjects()">
+                            <i class="icon ion-navicon"></i>
+                        </button>
+                        <h1 class="title"><!-- {{activeProject.title}} -->Lets Share</h1>
+                        <!-- New Task button-->
+                        <button class="button button-clear" ng-click="newTask()">
+                            New
+                        </button>
+                    </header>
+                </div>
 
 
 
 
-<content has-header="true">
-  <form  name="myform" ng-submit="test(formData)" novalidate class="simple-form">
-    <div class="">
-      <div class="list" id="form">
-        <label class="item item-input">
-          <input type="text" placeholder="From" ng-model="formData.id" name="id" value="1">
-        </label>
-        <label class="item item-input item-floating-label">
-          <input type="text" placeholder="From: Marathalli..." ng-model="formData.bookings.from" name="from" >
-        </label>
-        <label class="item item-input item-floating-label" >
-          <input type="text" placeholder ="To: Domlur..." ng-model="formData.bookings.to" name="to">
-        </label>
-        <div id="mapDiv" style="">
-        for map
-        </div>
-        <label class="item item-input">
-          <!-- <input type="text" placeholder="Date" ng-model="formData.bookings.date" name="date"> -->
-          <datetimepicker data-ng-model="formData.bookings.datetime" data-on-set-time="onTimeSet"></datetimepicker>
-        </label>
-        <!-- <select ng-model="formData.bookings.cars" name="cars">
+                <content has-header="true" style="height:100%">
+                    <form name="myform" ng-submit="test(formData)" novalidate class="simple-form">
+                        <div class="">
+                            <div class="list" id="form">
+                                <label class="item item-input">
+                                    <input type="text" placeholder="UserId" ng-model="formData.id" name="id" value="1">
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <input id="source" type="text" placeholder="From: Marathalli..." ng-model="formData.bookings.from" name="from">
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <input ng-enter="generateRoute()" id="destination" type="text" placeholder="To: Domlur..." ng-model="formData.bookings.to" name="to">
+                                </label>
+
+                                <ion-content scroll="false" class="clearfix-custom">
+                                    <map on-create="mapCreated(map)"></map>
+                                </ion-content>
+                                
+
+                                <!-- <ion-footer-bar class="bar-stable top-it">
+                                    <a ng-click="generateRoute()" class="button button-icon icon ion-navigate"></a>
+                                </ion-footer-bar> -->
+
+
+                                <label class="item item-input">
+                                    <!-- <input type="text" placeholder="Date" ng-model="formData.bookings.date" name="date"> -->
+                                    <datetimepicker data-ng-model="formData.bookings.datetime" data-on-set-time="onTimeSet"></datetimepicker>
+                                </label>
+                                <!-- <select ng-model="formData.bookings.cars" name="cars">
           <option value="1" selected>Hatchback</option>
           <option value="2">Sedan</option>
           <option value="3" >SUV</option>
         </select> -->
-        <label class="item">
-          <div class="button-bar">
-              <a class="button" ng-class="{'button-positive': isActive('Sedan')}" ng-click="setActive('Sedan')">Sedan</a>
-              <a class="button" ng-class="{'button-positive': isActive('Hatchback')}" ng-click="setActive('Hatchback')">Hatchback</a>
-              <a class="button" ng-class="{'button-positive': isActive('SUV')}" ng-click="setActive('SUV')">SUV</a>
-          </div>
-        </label>
-        <label class="item">
-          <div class="button-bar">
-              <a class="button" ng-class="{'button-positive': isActive('one')}" ng-click="setActive('one')">1</a>
-              <a class="button" ng-class="{'button-positive': isActive('two')}" ng-click="setActive('two')">2</a>
-              <a class="button" ng-class="{'button-positive': isActive('three')}" ng-click="setActive('three')">3</a>
-              <a class="button" ng-class="{'button-positive': isActive('four')}" ng-click="setActive('four')">4</a>
-              <a class="button" ng-class="{'button-positive': isActive('five')}" ng-click="setActive('five')">5</a>
-          </div>
-        </label>
-        
-      </div>
-    <button class="button button-block button-positive" type="submit">
-        Go
-    </button>
-    </div>
-  </form>
-</content>
- </div>
-</pane>
+                                <label class="item">
+                                    <div class="button-bar">
+                                        <a class="button" ng-class="{'button-positive': isActive('Sedan')}" ng-click="setActive('Sedan')">Sedan</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('Hatchback')}" ng-click="setActive('Hatchback')">Hatchback</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('SUV')}" ng-click="setActive('SUV')">SUV</a>
+                                    </div>
+                                </label>
+                                <label class="item">
+                                    <div class="button-bar">
+                                        <a class="button" ng-class="{'button-positive': isActive('one')}" ng-click="setActive('one')">1</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('two')}" ng-click="setActive('two')">2</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('three')}" ng-click="setActive('three')">3</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('four')}" ng-click="setActive('four')">4</a>
+                                        <a class="button" ng-class="{'button-positive': isActive('five')}" ng-click="setActive('five')">5</a>
+                                    </div>
+                                </label>
+
+                            </div>
+                            <ion-footer-bar class="bar-stable">
+                                <button class="button button-block button-positive" type="submit">Go</button>
+                            </ion-footer-bar>
+                        </div>
+                    </form>
+                </content>
+            </div>
+        </pane>
 
 
 
-      <!-- Left menu -->
-      <side-menu side="left">
-        <header class="bar bar-header bar-positive">
-          <h1 class="title">Menu</h1>
-          <button class="button button-icon" ng-click="newProject()">
-            <i class="ion ion-plus"></i>
-          </button>
-        </header>
-        <content has-header="true">
-          <list>
-            <item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
-              {{project.title}}
-            </item>
+        <!-- Left menu -->
+        <side-menu side="left">
+            <header class="bar bar-header bar-positive">
+                <h1 class="title">Menu</h1>
+                <button class="button button-icon" ng-click="newProject()">
+                    <i class="ion ion-plus"></i>
+                </button>
+            </header>
+            <content has-header="true">
+                <list>
+                    <item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+                        {{project.title}}
+                    </item>
 
-          </list>
-        </content>
-      </side-menu>
+                </list>
+            </content>
+        </side-menu>
     </side-menus>
 
-    <script id="new-task.html" type="text/ng-template">
-      <div class="modal">
-        <header class="bar bar-header bar-positive">
-          <h1 class="title">New Task</h1>
-          <button class="button button-clear" ng-click="closeNewTask()">Cancel</button>
-        </header>
-        <content has-header="true">
-          <form ng-submit="createTask(task)">
-            <div class="list">
-              <label class="item item-input">
-                <input type="text" placeholder="What do you need to do?" ng-model="task.title">
-              </label>
-            </div>
-            <div class="padding">
-              <button type="submit" class="button button-block button-primary">Create Task</button>
-            </div>
-          </form>
+    <script id="load-modal.html" type="text/ng-template">
+        <div class="modal">
+            <header class="bar bar-header bar-positive">
+                <h1 class="title">New Task</h1>
+                <button class="button button-clear" ng-click="closeNewTask()">Cancel</button>
+            </header>
+            <content has-header="true">
+                <form ng-submit="createTask(task)">
+                    <div class="list">
+                        <label class="item item-input">
+                            <input type="text" placeholder="What do you need to do?" ng-model="task.title">
+                        </label>
+                    </div>
+                    <div class="padding">
+                        <button type="submit" class="button button-block button-primary">Create Task</button>
+                    </div>
+                </form>
         </div>
-      </div>
+        </div>
     </script>
-  </body>
+</body>
+
+
 </html>
