@@ -2,12 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>ToDo</title>
+    <title>Let's Share</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link rel="stylesheet" href="lib/css/ionic.css">
     <link rel="stylesheet" href="css/app.css">
-
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="lib/js/ionic.js"></script>
     <script src="lib/js/angular/angular.js"></script>
     <script src="lib/js/angular-ui/angular-ui-router.js"></script>
@@ -16,35 +18,92 @@
     <script src="lib/js/angular/angular-sanitize.js"></script>
     <script src="lib/js/ionic-angular.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/moment/moment.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="lib/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
     <script src="js/app.js"></script>
+
   </head>
-  <body ng-app="todo" ng-controller="TodoCtrl">
+  <body ng-app="lets_share" ng-controller="TodoCtrl">
     <side-menus>
       <!-- Center content -->
       <pane side-menu-content>
+        <div id="test" style="width:100%">
+        <div>
         <header class="bar bar-header bar-positive">
           <button class="button button-icon" ng-click="toggleProjects()">
             <i class="icon ion-navicon"></i>
           </button>
-          <h1 class="title">{{activeProject.title}}</h1>
+          <h1 class="title"><!-- {{activeProject.title}} -->Lets Share</h1>
           <!-- New Task button-->
           <button class="button button-clear" ng-click="newTask()">
             New
           </button>
         </header>
-        <content has-header="true">
-          <list class="fade-in-not-out">
-            <checkbox ng-repeat="task in activeProject.tasks" ng-change="completionChanged()" ng-model="task.isComplete" ng-class="{complete: task.isComplete}">
-            {{task.title}}
-            </checkbox>
-          </list>
-        </content>
-      </pane>
+      </div>
+
+
+
+
+<content has-header="true">
+  <form  name="myform" ng-submit="test(formData)" novalidate class="simple-form">
+    <div class="">
+      <div class="list" id="form">
+        <label class="item item-input">
+          <input type="text" placeholder="From" ng-model="formData.id" name="id" value="1">
+        </label>
+        <label class="item item-input item-floating-label">
+          <input type="text" placeholder="From: Marathalli..." ng-model="formData.bookings.from" name="from" >
+        </label>
+        <label class="item item-input item-floating-label" >
+          <input type="text" placeholder ="To: Domlur..." ng-model="formData.bookings.to" name="to">
+        </label>
+        <div id="mapDiv" style="">
+        for map
+        </div>
+        <label class="item item-input">
+          <!-- <input type="text" placeholder="Date" ng-model="formData.bookings.date" name="date"> -->
+          <datetimepicker data-ng-model="formData.bookings.datetime" data-on-set-time="onTimeSet"></datetimepicker>
+        </label>
+        <!-- <select ng-model="formData.bookings.cars" name="cars">
+          <option value="1" selected>Hatchback</option>
+          <option value="2">Sedan</option>
+          <option value="3" >SUV</option>
+        </select> -->
+        <label class="item">
+          <div class="button-bar">
+              <a class="button" ng-class="{'button-positive': isActive('Sedan')}" ng-click="setActive('Sedan')">Sedan</a>
+              <a class="button" ng-class="{'button-positive': isActive('Hatchback')}" ng-click="setActive('Hatchback')">Hatchback</a>
+              <a class="button" ng-class="{'button-positive': isActive('SUV')}" ng-click="setActive('SUV')">SUV</a>
+          </div>
+        </label>
+        <label class="item">
+          <div class="button-bar">
+              <a class="button" ng-class="{'button-positive': isActive('one')}" ng-click="setActive('one')">1</a>
+              <a class="button" ng-class="{'button-positive': isActive('two')}" ng-click="setActive('two')">2</a>
+              <a class="button" ng-class="{'button-positive': isActive('three')}" ng-click="setActive('three')">3</a>
+              <a class="button" ng-class="{'button-positive': isActive('four')}" ng-click="setActive('four')">4</a>
+              <a class="button" ng-class="{'button-positive': isActive('five')}" ng-click="setActive('five')">5</a>
+          </div>
+        </label>
+        
+      </div>
+    <button class="button button-block button-positive" type="submit">
+        Go
+    </button>
+    </div>
+  </form>
+</content>
+ </div>
+</pane>
+
+
 
       <!-- Left menu -->
       <side-menu side="left">
         <header class="bar bar-header bar-positive">
-          <h1 class="title">Projects</h1>
+          <h1 class="title">Menu</h1>
           <button class="button button-icon" ng-click="newProject()">
             <i class="ion ion-plus"></i>
           </button>
@@ -54,6 +113,7 @@
             <item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
               {{project.title}}
             </item>
+
           </list>
         </content>
       </side-menu>

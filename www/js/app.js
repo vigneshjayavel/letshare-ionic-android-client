@@ -1,4 +1,4 @@
-angular.module('todo', ['ionic'])
+angular.module('lets_share', ['ionic','ui.bootstrap.datetimepicker'])
 
 /**
  * The Projects factory handles saving and loading projects
@@ -33,7 +33,7 @@ angular.module('todo', ['ionic'])
   }
 })
 
-.controller('TodoCtrl', function($scope, $timeout, $ionicModal, Projects) {
+.controller('TodoCtrl', function($scope, $timeout, $http, $ionicModal, Projects) {
 
   // A utility function for creating a new project
   // with the given projectTitle
@@ -44,9 +44,33 @@ angular.module('todo', ['ionic'])
     $scope.selectProject(newProject, $scope.projects.length-1);
   }
 
+  var myArray = [
+  { "title": "Home"}, 
+  { "title": "Rides"}, 
+  { "title": "Settings"}, 
+  { "title": "Logout"}
+];
+
+    // radio button logic
+    $scope.active = 'Hatchback';
+
+    $scope.setActive = function(type) {
+        $scope.active = type;
+    };
+
+    $scope.isActive = function(type) {
+        return type === $scope.active;
+    };
+
+    //datetimepicker
+    $scope.onTimeSet = function (newDate, oldDate) {
+        console.log(newDate);
+        console.log(oldDate);
+    }
 
   // Load or initialize projects
-  $scope.projects = Projects.all();
+  // $scope.projects = Projects.all(); commented to show only menu listing
+  $scope.projects = myArray
 
   // Grab the last active, or the first project
   $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
@@ -104,11 +128,48 @@ angular.module('todo', ['ionic'])
   $scope.toggleProjects = function() {
     $scope.sideMenuController.toggleLeft();
   };
+//   $scope.myForm = {};
+//        $scope.from = "Chennai";
+//        $scope.to  = "Trichy";
+//        $scope.date  = "date";
+//        $scope.time  = "time";
+//   $scope.submit = function() {
+// alert($scope.from);
+// alert($scope.to);
+// alert($scope.date);
+// alert($scope.time);
 
+//         if ($scope.text) {
+//           $scope.list.push(this.text);
+//           $scope.text = '';
+//         }
+//       };
 
   // Try to create the first project, make sure to defer
   // this by using $timeout so everything is initialized
   // properly
+  $scope.formData = {};
+    $scope.test = function(formData) {
+      debugger
+      // $http({
+      //     method: 'POST',
+      //     url: 'http://srinivasan.ngrok.com/bookings',
+      //      data: formData
+      // }).success(function () {
+      //   alert("success on post request");
+      // });
+
+jQuery.ajax({
+    type: 'POST',
+    url: 'http://srinivasan.ngrok.com/bookings',
+    data: formData,
+    dataType: 'json',
+    success: function() {
+      alert("success on post request");
+    }
+});
+
+      };
   $timeout(function() {
     if($scope.projects.length == 0) {
       while(true) {
