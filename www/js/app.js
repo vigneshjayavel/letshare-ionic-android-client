@@ -62,6 +62,14 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
         return type === $scope.active;
     };
 
+$scope.setActive1 = function(type) {
+        $scope.active1 = type;
+    };
+
+    $scope.isActive1 = function(type) {
+        return type === $scope.active1;
+    };
+
     //datetimepicker
     $scope.onTimeSet = function(newDate, oldDate) {
         console.log(newDate);
@@ -95,13 +103,7 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
     };
 
     // Create our modal
-    $ionicModal.fromTemplateUrl('load-modal.html', function(modal) {
-        $scope.taskModal = modal;
-    }, {
-        focusFirstInput: false,
-        scope: $scope
-    });
-
+    
     $scope.createTask = function(task) {
         if (!$scope.activeProject) {
             return;
@@ -159,7 +161,10 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
     // Try to create the first project, make sure to defer
     // this by using $timeout so everything is initialized
     // properly
-
+var getValue=function  () {
+    // body...
+    return "abc";
+}
     $scope.formData = {};
     $scope.test = function(formData) {
       // $http({
@@ -178,20 +183,35 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
             global: false,
             async:false,
             beforeSend: function() { 
-                $scope.loading = $ionicLoading.show({
-                    content: 'Please wait while our server gives you the best ride!',
-                    showBackdrop: false
+                // $scope.loading = $ionicLoading.show({
+                //     content: 'Please wait while our server gives you the best ride!',
+                //     showBackdrop: false
+                // });
+
+                $scope.loading1 = $ionicLoading.show({
+                    content: getValue(),
+                    showBackdrop: true
                 });
             },
             complete: function() { 
-                setInterval(function(){
-                    $scope.loading.hide()
-                }, 4000);
+                // $scope.loading.hide()
+
+                
+
+                
             },
             success: function(response) {
 
                 $("#head").removeAttr( "hidden" )
                 $scope.status=response.status.button
+                
+                   setInterval(function(){
+                    $scope.loading1.hide()
+                     
+                }, 8000);
+
+
+
             }
         }).responseText;
 
