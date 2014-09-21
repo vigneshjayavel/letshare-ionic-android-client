@@ -35,7 +35,7 @@
         <pane side-menu-content>
             <div id="test" style="height:100%">
                 <div>
-                    <header class="bar bar-header bar-positive">
+                    <header class="bar bar-header bar-energized">
                         <button class="button button-icon" ng-click="toggleProjects()">
                             <i class="icon ion-navicon"></i>
                         </button>
@@ -74,7 +74,7 @@
 
                                 <label class="item item-input">
                                     <!-- <input type="text" placeholder="Date" ng-model="formData.bookings.date" name="date"> -->
-                                    <datetimepicker data-ng-model="formData.bookings.datetime" data-on-set-time="onTimeSet"></datetimepicker>
+                                    <datetimepicker data-ng-model="formData.bookings.datetime" data-on-set-time="onTimeSet" style="margin-left: 15%;display: block;"></datetimepicker>
                                 </label>
                                 <!-- <select ng-model="formData.bookings.cars" name="cars">
           <option value="1" selected>Hatchback</option>
@@ -83,24 +83,24 @@
         </select> -->
                                 <label class="item">
                                     <div class="button-bar">
-                                        <a class="button" ng-class="{'button-positive': isActive('Sedan')}" ng-click="setActive('Sedan')">Sedan</a>
-                                        <a class="button" ng-class="{'button-positive': isActive('Hatchback')}" ng-click="setActive('Hatchback')">Hatchback</a>
-                                        <a class="button" ng-class="{'button-positive': isActive('SUV')}" ng-click="setActive('SUV')">SUV</a>
+                                        <a class="button" ng-class="{'button-energized': isActive('Sedan')}" ng-click="setActive('Sedan')">Sedan</a>
+                                        <a class="button" ng-class="{'button-energized': isActive('Hatchback')}" ng-click="setActive('Hatchback')">Hatch</a>
+                                        <a class="button" ng-class="{'button-energized': isActive('SUV')}" ng-click="setActive('SUV')">SUV</a>
                                     </div>
                                 </label>
                                 <label class="item">
                                     <div class="button-bar">
-                                        <a class="button" ng-class="{'button-positive': isActive1('one')}" ng-click="setActive1('one')">1</a>
-                                        <a class="button" ng-class="{'button-positive': isActive1('two')}" ng-click="setActive1('two')">2</a>
-                                        <a class="button" ng-class="{'button-positive': isActive1('three')}" ng-click="setActive1('three')">3</a>
-                                        <a class="button" ng-class="{'button-positive': isActive1('four')}" ng-click="setActive1('four')">4</a>
-                                        <a class="button" ng-class="{'button-positive': isActive1('five')}" ng-click="setActive1('five')">5</a>
+                                        <a class="button" ng-class="{'button-energized': isActive1('one')}" ng-click="setActive1('one')">1</a>
+                                        <a class="button" ng-class="{'button-energized': isActive1('two')}" ng-click="setActive1('two')">2</a>
+                                        <a class="button" ng-class="{'button-energized': isActive1('three')}" ng-click="setActive1('three')">3</a>
+                                        <a class="button" ng-class="{'button-energized': isActive1('four')}" ng-click="setActive1('four')">4</a>
+                                        <a class="button" ng-class="{'button-energized': isActive1('five')}" ng-click="setActive1('five')">5</a>
                                     </div>
                                 </label>
 
                             </div>
                             <ion-footer-bar class="bar-stable">
-                                <button class="button button-block button-positive" type="submit">Go</button>
+                                <button class="button button-block button-energized" type="submit">Go</button>
                             </ion-footer-bar>
                         </div>
                     </form>
@@ -112,7 +112,7 @@
 
         <!-- Left menu -->
         <side-menu side="left">
-            <header class="bar bar-header bar-positive">
+            <header class="bar bar-header bar-energized">
                 <h1 class="title">Menu</h1>
                 <button class="button button-icon" ng-click="newProject()">
                     <i class="ion ion-plus"></i>
