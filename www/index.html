@@ -131,26 +131,6 @@
         </side-menu>
     </side-menus>
 
-    <script id="load-modal.html" type="text/ng-template">
-        <div class="modal">
-            <header class="bar bar-header bar-positive">
-                <h1 class="title">New Task</h1>
-                <button class="button button-clear" ng-click="closeNewTask()">Cancel</button>
-            </header>
-            <content has-header="true">
-                <form ng-submit="createTask(task)">
-                    <div class="list">
-                        <label class="item item-input">
-                            <input type="text" placeholder="What do you need to do?" ng-model="task.title">
-                        </label>
-                    </div>
-                    <div class="padding">
-                        <button type="submit" class="button button-block button-primary">Create Task</button>
-                    </div>
-                </form>
-        </div>
-        </div>
-    </script>
 </body>
 
 

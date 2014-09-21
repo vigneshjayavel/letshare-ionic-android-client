@@ -28,6 +28,8 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
   }
 })
 
+
+
 .controller('MainCtrl', function($scope, $q, $ionicLoading,$timeout, $http, $ionicModal, Projects) {
 
     // A utility function for creating a new project
@@ -126,6 +128,17 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
     $scope.toggleProjects = function() {
         $scope.sideMenuController.toggleLeft();
     };
+
+
+
+    $scope.load_show = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  };
+  $scope.load_hide = function(){
+    $ionicLoading.hide();
+  };
     //   $scope.myForm = {};
     //        $scope.from = "Chennai";
     //        $scope.to  = "Trichy";
@@ -146,26 +159,43 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
     // Try to create the first project, make sure to defer
     // this by using $timeout so everything is initialized
     // properly
+
     $scope.formData = {};
     $scope.test = function(formData) {
-        debugger
-        // $http({
-        //     method: 'POST',
-        //     url: 'http://srinivasan.ngrok.com/bookings',
-        //      data: formData
-        // }).success(function () {
-        //   alert("success on post request");
-        // });
+      // $http({
+      //     method: 'POST',
+      //     url: 'http://srinivasan.ngrok.com/bookings',
+      //      data: formData
+      // }).success(function () {
+      //   alert("success on post request");
+      // });
 
-        jQuery.ajax({
+        var content=jQuery.ajax({
             type: 'POST',
-            url: 'http://srinivasan.ngrok.com/bookings',
+            url: 'http://srinivasan.ngrok.com/bookings/search',
             data: formData,
             dataType: 'json',
-            success: function() {
-                alert("success on post request");
+            global: false,
+            async:false,
+            beforeSend: function() { 
+                $scope.loading = $ionicLoading.show({
+                    content: 'Please wait while our server gives you the best ride!',
+                    showBackdrop: false
+                });
+            },
+            complete: function() { 
+                setInterval(function(){
+                    $scope.loading.hide()
+                }, 4000);
+            },
+            success: function(response) {
+
+                $("#head").removeAttr( "hidden" )
+                $scope.status=response.status.button
             }
-        });
+        }).responseText;
+
+
 
     };
     $timeout(function() {
@@ -320,7 +350,9 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
             }
         });
     };
-});
+})
+
+
 
 // GLobal shit
 var directionsDisplay = new google.maps.DirectionsRenderer();
