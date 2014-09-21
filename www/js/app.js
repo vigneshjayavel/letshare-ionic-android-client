@@ -53,7 +53,7 @@ angular.module('lets_share', ['ionic', 'ui.bootstrap.datetimepicker'])
 
     // radio button logic
     $scope.active = 'Hatchback';
-
+    $scope.active1 = 'one'
     $scope.setActive = function(type) {
         $scope.active = type;
     };
@@ -175,46 +175,68 @@ var getValue=function  () {
       //   alert("success on post request");
       // });
 
-        var content=jQuery.ajax({
-            type: 'POST',
-            url: 'http://srinivasan.ngrok.com/bookings/search',
-            data: formData,
-            dataType: 'json',
-            global: false,
-            async:false,
-            beforeSend: function() { 
-                // $scope.loading = $ionicLoading.show({
-                //     content: 'Please wait while our server gives you the best ride!',
-                //     showBackdrop: false
-                // });
+        // var content=jQuery.ajax({
+        //     type: 'POST',
+        //     url: 'http://srinivasan.ngrok.com/bookings/search',
+        //     data: formData,
+        //     dataType: 'json',
+        //     global: false,
+        //     async:false,
+        //     beforeSend: function() { 
+        //         // $scope.loading = $ionicLoading.show({
+        //         //     content: 'Please wait while our server gives you the best ride!',
+        //         //     showBackdrop: false
+        //         // });
 
-                $scope.loading1 = $ionicLoading.show({
-                    content: getValue(),
-                    showBackdrop: true
-                });
-            },
-            complete: function() { 
-                // $scope.loading.hide()
-
-                
+        //         $scope.loading1 = $ionicLoading.show({
+        //             content: getValue(),
+        //             showBackdrop: true
+        //         });
+        //     },
+        //     complete: function() { 
+        //         // $scope.loading.hide()
 
                 
-            },
-            success: function(response) {
 
-                $("#head").removeAttr( "hidden" )
-                $scope.status=response.status.button
                 
-                   setInterval(function(){
-                    $scope.loading1.hide()
+        //     },
+        //     success: function(response) {
+
+        //         $("#head").removeAttr( "hidden" )
+        //         $scope.status=response.status.button
+                
+        //            setInterval(function(){
+        //             $scope.loading1.hide()
                      
-                }, 8000);
+        //         }, 8000);
 
 
 
-            }
-        }).responseText;
+        //     }
+        // }).responseText;
+        
+        $scope.loading1 = $ionicLoading.show({
+            content: "Our ride selection engine is doing awesome work for you!, Thanks for waiting!",
+            showBackdrop: true
+        });   
+        if ($scope.formData.id == "vignesh") {
+          msg = "You are in a pool of 30 similar passengers. "
+        } else {
+          msg = "Looks like you reached here first! We have initiated a ride for you."
+        }
 
+        msg+="\n We will get back to you with your ride details 4 hours before your pickup time! "
+        
+        setInterval(function(){
+          $scope.loading1 = $ionicLoading.show({
+              content: msg,
+              showBackdrop: true
+          });    
+        }, 4000);
+
+        setInterval(function(){
+            $scope.loading1.hide()
+        }, 8000);
 
 
     };

@@ -18,3 +18,10 @@ map {
   clear: both;
 
 }
+
+.popup-body .datetimepicker {
+  min-height: 221px;
+}
+.popup-body .datetimepicker table {
+  width: 100%;
+}
